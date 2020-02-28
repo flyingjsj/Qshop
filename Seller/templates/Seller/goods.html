@@ -1,0 +1,74 @@
+{% extends "Seller/base.html" %}
+{% block title %}
+    商品列表
+{% endblock %}
+{% block Content %}
+      <a href="/Seller/goodscreate/" id="refresh" style="float: right">
+          <button class="btn btn-primary btn-user btn-block" type='button'>新增商品</button>
+      </a>
+<table class="table">
+    <thead>
+       <tr>
+           <td>商品编号</td>
+           <td>商品名称</td>
+           <td>商品价格</td>
+           <td>商品数量</td>
+           <td>操作</td>
+       </tr>
+    </thead>
+    <tbody>
+     {% for one in mygoods %}
+       <tr>
+        <td>{{ one.goods_number }}</td>
+        <td>{{ one.goods_name }}</td>
+        <td>{{ one.goods_price }}</td>
+        <td>{{ one.goods_num }}</td>
+        <td>
+            <div style="width: 50%;height: 50%;float: left" >
+               <a href="/Seller/goodscreate/id={{ one.id }}" id="refresh" >
+                  <button class="btn btn-primary btn-user btn-block" type='button'>编辑</button>
+               </a>
+            </div>
+            <div style="width: 50%;height: 50%;float: right ">
+                  <button  class="btn btn-primary btn-user btn-block" type='button' id="del" data-id="{{ one.id }}">下架</button>
+            </div>
+        </td>
+
+       </tr>
+     {% endfor %}
+   </tbody>
+</table>
+{% endblock %}
+{% block js %}
+    <script>
+        $("#del").click(
+        function () {
+            console.log("abc")
+            var id = $("#del").data("id");
+            var url = "http://127.0.0.1:8000/Seller/goodscreate/"
+
+            senddata = {
+                "id": id,
+                "csrfmiddlewaretoken":"{{ csrf_token }}",
+            }
+             console.log(senddata)
+            $.ajax({
+                url : url,
+                type : "DELETE",
+                data : senddata,
+                success :function(data) {
+                    console.log(data)
+                    if (data.state == 200) {
+                        window.location.reload();
+                    }
+                },
+                error : function(data){
+
+                }
+
+            })
+
+        }
+    )
+    </script>
+{% endblock %}

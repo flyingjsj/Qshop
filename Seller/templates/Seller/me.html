@@ -1,0 +1,61 @@
+{% extends "Seller/base.html" %}
+{% block title %}
+    个人中心
+{% endblock %}
+{% block Content %}
+    个人中心
+
+    <form method="post"  enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="table">
+        <tr>
+            <td rowspan="3">
+                <img style="height: 300px; width: 300px" src="/static/{{ user.photo }}" name="img">
+                <br>
+                <input type="file" value="上传头像" name="image" >
+            </td>
+            <td>用户名：</td>
+            <td>
+                <input type="text" value="{{ user.username }}" name="username">
+            </td>
+            <td>邮箱：</td>
+            <td>
+                <input type="text" value="{{ user.email }}" name="email" >
+            </td>
+        </tr>
+        <tr>
+            <td>电话号码：</td>
+            <td><input type="text" value="{{ user.phonenum }}" name="phonenum" ></td>
+            <td>年龄</td>
+            <td><input type="text" value="{{ user.age }}" name="age" ></td>
+        </tr>
+        <tr>
+            <td>性别：</td>
+            <td>
+            <input value="{{ user.gender }}">
+                {% if user.gender  == 0 %}
+                   <select name="gender">
+                      <option value="0" selected>女</option>
+                      <option value="1">男</option>
+                   </select>
+                {% endif %}
+                {% if user.gender  == 1 %}
+                   <select name="gender">
+                      <option value="0">女</option>
+                      <option value="1" selected>男</option>
+                   </select>
+                {% endif %}
+
+            </td>
+            <td>地址：</td>
+            <td><input type="text" value="{{ user.adress }}" name="adress"></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+             <input type="submit" value="完善个人资料" class="btn btn-primary btn-user btn-block">
+            </td>
+        </tr>
+    </table>
+
+    </form>
+{% endblock %}

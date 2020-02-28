@@ -1,0 +1,44 @@
+{% extends "Seller/base.html" %}
+{% block title %}
+商品
+{% endblock %}
+{% block Content %}
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="table">
+        <tr>
+            <td>商品编号：</td>
+            <td><input type="text" name="goods_number"></td>
+            <td>商品名称：</td>
+            <td><input type="text" name="goods_name"></td>
+        </tr>
+        <tr>
+            <td>商品价格：</td>
+            <td><input type="text" name="goods_price"></td>
+            <td>商品数量：</td>
+            <td><input type="text" name="goods_num"></td>
+        </tr>
+        <tr>
+            <td>商品类型：</td>
+            <td><input type="text" name="type"></td>
+            <td>商品状态</td>
+            <td>
+               <select name="goods_type">
+                 {% for type in goods_type %}
+                     <option value="{{ type.id }}">{{ type.type_name }}</option>
+                 {% endfor %}
+               </select>
+            </td>
+        </tr>
+        <tr>
+            <td>商品图片：</td>
+            <td>
+               <input type="file" name="pic" value="商品图片">
+            </td>
+            <td >
+                <input class="btn btn-primary btn-user btn-block" type="submit" name="submit" value="新增商品">
+            </td>
+        </tr>
+    </table>
+    </form>
+{% endblock %}
